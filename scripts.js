@@ -1,15 +1,39 @@
 
-// Simple page navigation (buttons that exist on multiple pages)
+// Simple page navigation
 const navMap = [
     ['home', 'index.html'],
     ['contact', 'contact.html'],
     ['about', 'about.html']
 ];
 
+console.log('scripts.js loaded');
+
 navMap.forEach(([id, href]) => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('click', () => { window.location.href = href; });
+    console.log(`Button "${id}":`, el ? 'Found' : 'NOT FOUND');
+    if (el) {
+        el.addEventListener('click', () => { 
+            console.log(`Navigating to ${href}`);
+            window.location.href = href; 
+        });
+    }
 });
+
+// Profile button - check if logged in first
+const profileBtn = document.getElementById('profile');
+if (profileBtn) {
+    console.log('Profile button: Found');
+    profileBtn.addEventListener('click', () => {
+        console.log('Profile button clicked');
+        // Check if goToProfile function exists (from auth.js)
+        if (typeof goToProfile === 'function') {
+            goToProfile();
+        } else {
+            // Fallback if auth.js not loaded
+            window.location.href = 'login.html';
+        }
+    });
+}
 
 // Contact form handling with validation
 const contactForm = document.getElementById('contactForm');
